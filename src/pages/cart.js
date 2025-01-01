@@ -5,12 +5,12 @@ import Image from "next/image";
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
 
-  const handleQuantityChange = (id, delta) => {
+  const handleQuantityChange = (tempId, delta) => {
     dispatch({
       type: "UPDATE_QUANTITY",
-      id: id,
+      tempId: tempId,
       delta: delta,
-    });
+    }); 
   };
 
   const getTotalPrice = () => {
@@ -20,7 +20,7 @@ const Cart = () => {
   return (
     <>
       {state.length > 0 ? (
-        <div className="container mx-auto p-4 sm:p-6 h-[70vh]">
+        <div className="container mx-auto p-4 sm:p-6 mh-[70vh]">
           <h1 className="text-2xl font-bold mb-6 text-center">Your Cart</h1>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse border border-gray-800 text-sm">
@@ -63,14 +63,14 @@ const Cart = () => {
                     <td className="border border-gray-700 px-4 py-2 text-center">
                       <div className="flex items-center justify-center space-x-2">
                         <button
-                          onClick={() => handleQuantityChange(item.id, -1)}
+                          onClick={() => handleQuantityChange(item.tempId, -1)}
                           className="px-2 py-1 bg-gray-700 text-white rounded hover:bg-gray-800"
                         >
                           -
                         </button>
                         <span>{item.quantity}</span>
                         <button
-                          onClick={() => handleQuantityChange(item.id, 1)}
+                          onClick={() => handleQuantityChange(item.tempId, 1)}
                           className="px-2 py-1 bg-gray-700 text-white rounded hover:bg-gray-800"
                         >
                           +
@@ -84,7 +84,7 @@ const Cart = () => {
                       <button
                         // onClick={() => handleDelete(item.id)}
                         onClick={() => {
-                          dispatch({ type: "REMOVE", id: item.id });
+                          dispatch({ type: "REMOVE", tempId: item.tempId });
                         }}
                         className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
                       >

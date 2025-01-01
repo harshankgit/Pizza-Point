@@ -95,13 +95,13 @@ const CartHome = ({ products, SelectOption }) => {
                   src={product.img}
                   alt={product.title}
                   layout="intrinsic"
-                  width={600} // Width of the image (or leave it as auto for responsiveness)
-                  height={180} // The initial height
+                  width={600} 
+                  height={180} 
                   style={{
                     minHeight: "300px",
                     maxHeight: "300px",
                     objectFit: "cover",
-                  }} // Max height applied here
+                  }} 
                   className="rounded-lg object-cover mb-4"
                 />
 

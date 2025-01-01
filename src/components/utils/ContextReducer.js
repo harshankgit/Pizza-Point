@@ -29,21 +29,22 @@ const reducer = (state, action) => {
       });
       return arr;
 
-    case "REMOVE":
-      // let newarr = [...state];
-      // newarr.splice(action.index, 1);
-      // return newarr;
+    // case "REMOVE":
+    // let newarr = [...state];
+    // newarr.splice(action.index, 1);
+    // return newarr;
 
-      return state.filter((item) => item.id !== action.id);
+    case "REMOVE":
+      return state.filter((item) => {
+        return item.tempId !== action.tempId;
+      });
 
     case "UPDATE_QUANTITY":
       return state.map((item) =>
-        item.id === action.id
+        item.tempId === action.tempId
           ? { ...item, quantity: Math.max(1, item.quantity + action.delta) }
           : item
       );
-    case "REMOVE":
-      return state.filter((item) => item.id !== action.id);
 
     default:
       console.log("");

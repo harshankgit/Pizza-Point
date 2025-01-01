@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 ">
       <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
       <form
@@ -65,22 +65,25 @@ const Login = () => {
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center justify-between space-y-4">
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition"
           >
             Login
           </button>
+
           <Link href="/signin">
-            {" "}
-            <button className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition">
+            <button className="w-full bg-gray-100 text-blue-500 py-2 px-6 rounded-md border border-blue-500 shadow-lg hover:bg-blue-500 hover:text-white transition-all mt-2">
               New User
             </button>
           </Link>
-          <a href="#" className="text-sm text-blue-500 hover:underline">
-            Forgot password?
-          </a>
+
+          <div className="text-center">
+            <a href="#" className="text-sm text-blue-500 hover:underline">
+              Forgot password?
+            </a>
+          </div>
         </div>
       </form>
     </div>
