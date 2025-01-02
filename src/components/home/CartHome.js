@@ -17,26 +17,23 @@ const CartHome = ({ products, SelectOption }) => {
     }));
   };
 
-  const handleQuantityChange = (productId, change) => {
-    setCartState((prevState) => {
-      const updatedQuantity = Math.max(
-        1,
-        prevState[productId].quantity + change
-      );
-      return {
-        ...prevState,
-        [productId]: { ...prevState[productId], quantity: updatedQuantity },
-      };
-    });
-  };
+  //   const handleQuantityChange = (productId, change) => {
+  //     setCartState((prevState) => {
+  //       const updatedQuantity = Math.max(
+  //         1,
+  //         prevState[productId].quantity + change
+  //       );
+  //       return {
+  //         ...prevState,
+  //         [productId]: { ...prevState[productId], quantity: updatedQuantity },
+  //       };
+  //     });
+  //   };
 
   const getPrice = (product) => {
     const { size, quantity } = cartState[product.id];
     return product.price[size] * quantity;
-  };
-  // useEffect(() => {
-  //   handleAddToCart;
-  // }, []);
+  }; 
   const handleAddToCart = async (product) => {
     const productState = cartState[product.id];
     if (!productState) {
@@ -95,13 +92,13 @@ const CartHome = ({ products, SelectOption }) => {
                   src={product.img}
                   alt={product.title}
                   layout="intrinsic"
-                  width={600} 
-                  height={180} 
+                  width={600}
+                  height={180}
                   style={{
                     minHeight: "300px",
                     maxHeight: "300px",
                     objectFit: "cover",
-                  }} 
+                  }}
                   className="rounded-lg object-cover mb-4"
                 />
 
@@ -142,7 +139,7 @@ const CartHome = ({ products, SelectOption }) => {
                     ))}
                   </select>
                 </div>
-                <div className="flex items-center justify-between mt-4">
+                {/* <div className="flex items-center justify-between mt-4">
                   <label className="block text-gray-300 text-sm font-medium mb-1">
                     Choose Quantity:
                   </label>
@@ -161,7 +158,7 @@ const CartHome = ({ products, SelectOption }) => {
                   >
                     +
                   </button>
-                </div>
+                </div> */}
                 <p className="text-lg font-bold text-gray-300 mt-4">
                   Price: ₹{getPrice(product)} /-
                 </p>

@@ -16,13 +16,15 @@ const Login = () => {
     }
 
     setError("");
+    setEmail("");
+    setPassword("");
     // Simulate a login (Replace with actual login logic)
     console.log("Logging in with:", { email, password });
     alert("Login Successful!"); // Placeholder
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 ">
+    <div className="container mx-auto py-8 px-4 min-h-[70vh]">
       <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
       <form

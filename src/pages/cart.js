@@ -10,7 +10,7 @@ const Cart = () => {
       type: "UPDATE_QUANTITY",
       tempId: tempId,
       delta: delta,
-    }); 
+    });
   };
 
   const getTotalPrice = () => {
@@ -20,7 +20,7 @@ const Cart = () => {
   return (
     <>
       {state.length > 0 ? (
-        <div className="container mx-auto p-4 sm:p-6 mh-[70vh]">
+        <div className="container mx-auto p-4 sm:p-6 min-h-[70vh]">
           <h1 className="text-2xl font-bold mb-6 text-center">Your Cart</h1>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse border border-gray-800 text-sm">
@@ -58,7 +58,7 @@ const Cart = () => {
                       {item.priceOption}
                     </td>
                     <td className="border border-gray-700 px-4 py-2 text-center">
-                      ₹{item.price}
+                      ₹{item.price} /-
                     </td>
                     <td className="border border-gray-700 px-4 py-2 text-center">
                       <div className="flex items-center justify-center space-x-2">
@@ -78,7 +78,7 @@ const Cart = () => {
                       </div>
                     </td>
                     <td className="border border-gray-700 px-4 py-2 text-center">
-                      ₹{item.price * item.quantity}
+                      ₹{item.price * item.quantity} /-
                     </td>
                     <td className="border border-gray-700 px-4 py-2 text-center">
                       <button

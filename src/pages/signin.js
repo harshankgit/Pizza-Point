@@ -5,7 +5,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  //   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
@@ -17,13 +17,20 @@ const SignIn = () => {
     }
 
     setError("");
-
-    console.log("Signing in with:", { email, password, username, rememberMe });
+    setUsername("");
+    setPassword("");
+    setEmail("");
+    console.log("Signing in with:", {
+      email,
+      password,
+      username,
+      // , rememberMe
+    });
     alert("Sign In Successful!");
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 min-h-[70vh]">
       <h1 className="text-3xl font-bold text-center mb-6">Sign In</h1>
 
       <form
@@ -85,7 +92,7 @@ const SignIn = () => {
         </div>
 
         {/* Remember Me Checkbox */}
-        <div className="mb-4 flex items-center">
+        {/* <div className="mb-4 flex items-center">
           <input
             type="checkbox"
             id="rememberMe"
@@ -96,7 +103,7 @@ const SignIn = () => {
           <label htmlFor="rememberMe" className="text-sm text-gray-700">
             Remember me
           </label>
-        </div>
+        </div> */}
 
         {/* Error Message */}
         {error && <p className="text-red-500 text-sm">{error}</p>}
