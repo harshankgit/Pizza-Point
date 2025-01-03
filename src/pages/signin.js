@@ -1,14 +1,18 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import { baseUrl } from "../components/utils/baseUrl";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const router = useRouter();
   //   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password || !username) {
@@ -16,17 +20,37 @@ const SignIn = () => {
       return;
     }
 
+    const response = await fetch(baseUrl + "api/usersignup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: username,
+        email: email,
+        password: password,
+      }),
+    });
+    const json = await response.json();
+    console.log("json", json);
+    if (json.success) {
+      localStorage.setItem("token", json.authToken);
+      localStorage.setItem("useremail", email);
+      router.push("/");
+    } else {
+      toast.error("please try again!!");
+    }
     setError("");
     setUsername("");
     setPassword("");
     setEmail("");
-    console.log("Signing in with:", {
-      email,
-      password,
-      username,
-      // , rememberMe
-    });
-    alert("Sign In Successful!");
+    // console.log("Signing in with:", {
+    //   email,
+    //   password,
+    //   username,
+    //   // , rememberMe
+    // });
+    // alert("Sign In Successful!");
   };
 
   return (

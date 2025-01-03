@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FaShoppingCart,
   FaUserAlt,
   FaSignInAlt,
   FaClipboardList,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import Link from "next/link";
 import { CartContext } from "../utils/ContextReducer";
@@ -11,9 +12,14 @@ import Image from "next/image";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state } = useContext(CartContext);
+  const [mounted, setMounted] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return null;
 
   return (
     <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 shadow-lg">
@@ -43,27 +49,45 @@ const Navbar = () => {
             <FaShoppingCart />
             Cart {state.length || 0}
           </Link>
-          <Link
-            href="/myorder"
-            className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
-          >
-            <FaClipboardList />
-            My Order
-          </Link>
-          <Link
-            href="/login"
-            className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
-          >
-            <FaUserAlt />
-            Login
-          </Link>
-          <Link
-            href="/signin"
-            className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
-          >
-            <FaSignInAlt />
-            Sign In
-          </Link>
+          {localStorage.getItem("token") ? (
+            <>
+              <Link
+                href="/myorder"
+                className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+              >
+                <FaClipboardList />
+                My Order
+              </Link>
+              <Link
+                href="/login"
+                className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("useremail");
+                }}
+              >
+                <FaSignOutAlt />
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+              >
+                <FaUserAlt />
+                Login
+              </Link>
+              <Link
+                href="/signin"
+                className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+              >
+                <FaSignInAlt />
+                Sign In
+              </Link>
+            </>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}

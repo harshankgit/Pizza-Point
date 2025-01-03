@@ -63,7 +63,7 @@ const CartHome = ({ products, SelectOption }) => {
       dispatch({
         type: "ADD",
         id: product["_id"],
-        tempId: product["_id"] + size,
+        tempId: product["_id"] + size, 
         title: product.title,
         price: prices,
         quantity,

@@ -1,12 +1,14 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import { baseUrl } from "../components/utils/baseUrl";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
+  const router = useRouter();
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Simple validation for fields
@@ -14,13 +16,31 @@ const Login = () => {
       setError("Please enter both email and password");
       return;
     }
-
+    const response = await fetch(baseUrl + "api/userlogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const json = await response.json();
+    console.log("json", json);
+    if (json.success) {
+      localStorage.setItem("token", json.authToken);
+      localStorage.setItem("useremail", email);
+      router.push("/");
+    } else {
+      toast.error("please try again!!");
+    }
     setError("");
     setEmail("");
     setPassword("");
-    // Simulate a login (Replace with actual login logic)
-    console.log("Logging in with:", { email, password });
-    alert("Login Successful!"); // Placeholder
+    // // Simulate a login (Replace with actual login logic)
+    // console.log("Logging in with:", { email, password });
+    // alert("Login Successful!"); // Placeholder
   };
 
   return (
