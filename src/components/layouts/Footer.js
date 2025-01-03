@@ -8,18 +8,20 @@ const Footer = () => {
     <footer className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6">
       <div className="container mx-auto flex flex-col items-center">
         {/* Logo Section */}
-        <div className="flex items-center gap-2 mb-4">
-          <Image
-            src="https://assets.indolj.io/images/1726820931-Logo.webp?q=10"
-            alt="Pizza Point Logo"
-            className="h-12 w-12 rounded-full transition-transform duration-300 ease-in-out transform hover:scale-110"
-            width={48} // Specify width in pixels
-            height={48} // Specify height in pixels
-          />
-          <span className="text-white text-2xl font-bold hover:text-yellow-400 transition-colors duration-300">
-            Pizza Point
-          </span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-2 mb-4">
+            <Image
+              src="https://assets.indolj.io/images/1726820931-Logo.webp?q=10"
+              alt="Pizza Point Logo"
+              className="h-12 w-12 rounded-full transition-transform duration-300 ease-in-out transform hover:scale-110"
+              width={48} // Specify width in pixels
+              height={48} // Specify height in pixels
+            />
+            <span className="text-white text-2xl font-bold hover:text-yellow-400 transition-colors duration-300">
+              Pizza Point
+            </span>
+          </div>
+        </Link>
 
         {/* Navigation Links */}
         <nav className="flex space-x-6 mb-4">

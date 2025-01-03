@@ -1,26 +1,84 @@
 import React, { useState } from "react";
 import CarouselComponent from "@/components/home/Carousel";
-import products from "../components/store/cartData.json";
+// import products from "../components/store/cartData.json";
 import CartHome from "@/components/home/CartHome";
 import { FaGlobe, FaLeaf, FaDrumstickBite } from "react-icons/fa";
+import { baseUrl } from "../components/utils/baseUrl";
+import Head from "next/head";
 
-const Index = () => {
+// export async function getStaticProps() {
+//   let response = null;
+//   try {
+//     const data = await fetch(baseUrl + "api/pizzadata", {
+//       method: "GET",
+//     }).then((response) => response.json().catch((err) => err.message));
+
+//     response = await JSON.parse(JSON.stringify(data));
+//     console.log("response", response);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+
+//   return {
+//     props: {
+//       data: response.data,
+//     },
+//   };
+// }
+export async function getStaticProps() {
+  let response = null;
+
+  try {
+    const res = await fetch(`${baseUrl}api/pizzadata`);
+    if (!res.ok) throw new Error(`Failed to fetch data: ${res.statusText}`);
+    response = await res.json();
+  } catch (error) {
+    console.error("Error fetching pizza data:", error.message);
+  }
+
+  return {
+    props: {
+      data: response?.data || null,
+    },
+  };
+}
+
+// console.log(baseUrl, process.env.NODE_ENV);
+const Index = ({ data }) => {
   const [SelectOption, setSelectOption] = useState("All");
   let categories = new Set();
   let foodData = [];
 
+  if (!data) {
+    return (
+      <div className="text-center">
+        <h1>Pizza Data Unavailable</h1>
+        <p>Please check back later.</p>
+      </div>
+    );
+  }
   const handleData = () => {
-    products.forEach((data) => {
-      foodData.push(data);
-      categories.add(data?.category);
+    // console.log("data", data);
+    data?.map((data) => {
+      return foodData.push(data), categories.add(data.category);
     });
   };
 
   handleData();
-  let categoriesArray = [...categories];
 
+  let categoriesArray = [...categories];
+  // console.log("datas..", data);
   return (
     <div>
+      <Head>
+        <title>Pizza Point</title>
+
+        <link
+          rel="icon"
+          href="https://assets.indolj.io/images/1726820931-Logo.webp?q=10"
+        />
+      </Head>
+
       <>
         <CarouselComponent />
         <div className="flex space-x-4 justify-center my-4">
