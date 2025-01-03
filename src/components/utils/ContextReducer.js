@@ -38,6 +38,9 @@ const reducer = (state, action) => {
       return state.filter((item) => {
         return item.tempId !== action.tempId;
       });
+    case "DROP":
+      let empty = [];
+      return empty;
 
     case "UPDATE_QUANTITY":
       return state.map((item) =>

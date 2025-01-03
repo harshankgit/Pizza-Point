@@ -3,6 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { baseUrl } from "../../components/utils/baseUrl";
+import { useRouter } from "next/navigation";
 
 export async function getServerSideProps(context) {
   const { item } = context.query;
@@ -19,8 +20,10 @@ export async function getServerSideProps(context) {
 }
 
 const Item = ({ data }) => {
+  const router = useRouter();
   const handleBack = () => {
-    window.history.back();
+    // window.history.back();
+    router.push("/");
   };
 
   const priceOptions = Object.entries(data?.data?.price || {}).map(
@@ -37,7 +40,7 @@ const Item = ({ data }) => {
   console.log("data", data);
   console.log("data", data.data.img);
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center">
+    <div className="min-h-screen bg-black-300 bg-black flex items-center justify-center">
       <motion.div
         className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full my-10"
         initial={{ opacity: 0, y: 50 }}

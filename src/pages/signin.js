@@ -2,7 +2,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { baseUrl } from "../components/utils/baseUrl";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -37,6 +38,10 @@ const SignIn = () => {
       localStorage.setItem("token", json.authToken);
       localStorage.setItem("useremail", email);
       router.push("/");
+      toast.success("Sign In successfully");
+    } else if (json.error) {
+      toast.error("Account already exists! Please log in.");
+      router.push("/login");
     } else {
       toast.error("please try again!!");
     }

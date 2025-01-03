@@ -63,7 +63,7 @@ const CartHome = ({ products, SelectOption }) => {
       dispatch({
         type: "ADD",
         id: product["_id"],
-        tempId: product["_id"] + size, 
+        tempId: product["_id"] + size,
         title: product.title,
         price: prices,
         quantity,
@@ -87,14 +87,14 @@ const CartHome = ({ products, SelectOption }) => {
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
             {products.map((product) => (
-              <Link
+              <div
                 key={product["_id"]}
-                href={{ pathname: "/item/[item]" }}
-                as={`item/${product["_id"]}`}
+                className="border-2 rounded-lg shadow-xl p-4 bg-black hover:shadow-2xl transition-shadow duration-300 ease-in-out border-indigo-600 hover:border-indigo-800"
               >
-                <div
+                <Link
                   key={product["_id"]}
-                  className="border-2 rounded-lg shadow-xl p-4 bg-black hover:shadow-2xl transition-shadow duration-300 ease-in-out border-indigo-600 hover:border-indigo-800"
+                  href={{ pathname: "/item/[item]" }}
+                  as={`item/${product["_id"]}`}
                 >
                   <Image
                     src={product.img}
@@ -130,26 +130,27 @@ const CartHome = ({ products, SelectOption }) => {
                   <p className="text-sm text-gray-400 italic mb-4">
                     {product.description}
                   </p>
-                  <div className="mb-4">
-                    <label className="block text-gray-300 text-sm font-medium mb-1">
-                      Choose Size:
-                    </label>
+                </Link>
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm font-medium mb-1">
+                    Choose Size:
+                  </label>
 
-                    <select
-                      className="w-full border-2 border-gray-600 bg-black text-white rounded px-3 py-2 focus:outline-none focus:border-indigo-600"
-                      value={cartState[product["_id"]]?.size || ""}
-                      onChange={({ target: { value } }) =>
-                        handleSizeChange(product["_id"], value)
-                      }
-                    >
-                      {product.options.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {/* <div className="flex items-center justify-between mt-4">
+                  <select
+                    className="w-full border-2 border-gray-600 bg-black text-white rounded px-3 py-2 focus:outline-none focus:border-indigo-600"
+                    value={cartState[product["_id"]]?.size || ""}
+                    onChange={({ target: { value } }) =>
+                      handleSizeChange(product["_id"], value)
+                    }
+                  >
+                    {product.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/* <div className="flex items-center justify-between mt-4">
               <label className="block text-gray-300 text-sm font-medium mb-1">
                 Choose Quantity:
               </label>
@@ -169,17 +170,16 @@ const CartHome = ({ products, SelectOption }) => {
                 +
               </button>
             </div> */}
-                  <p className="text-lg font-bold text-gray-300 mt-4">
-                    Price: ₹{getPrice(product)} /-
-                  </p>
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 mt-4 transition-colors duration-300"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </Link>
+                <p className="text-lg font-bold text-gray-300 mt-4">
+                  Price: ₹{getPrice(product)} /-
+                </p>
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 mt-4 transition-colors duration-300"
+                >
+                  Add to Cart
+                </button>
+              </div>
             ))}
           </div>
         </div>

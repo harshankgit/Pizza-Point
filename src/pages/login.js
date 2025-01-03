@@ -2,7 +2,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { baseUrl } from "../components/utils/baseUrl";
 import { useRouter } from "next/navigation";
-
+import { toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +33,7 @@ const Login = () => {
       localStorage.setItem("token", json.authToken);
       localStorage.setItem("useremail", email);
       router.push("/");
+      toast.success("Login successfully");
     } else {
       toast.error("please try again!!");
     }

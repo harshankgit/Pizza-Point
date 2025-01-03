@@ -2,15 +2,45 @@ import React, { useContext } from "react";
 import { CartContext } from "@/components/utils/ContextReducer";
 import { FaTrashAlt } from "react-icons/fa";
 import Image from "next/image";
+import { baseUrl } from "../components/utils/baseUrl";
+import { toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css";
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
-
+  console.log("statestate", state);
   const handleQuantityChange = (tempId, delta) => {
     dispatch({
       type: "UPDATE_QUANTITY",
       tempId: tempId,
       delta: delta,
     });
+  };
+  const handleCheckOut = async () => {
+    let userEmail = localStorage.getItem("useremail");
+
+    try {
+      const response = await fetch(baseUrl + "api/orderdetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          order_data: state,
+          email: userEmail,
+          order_date: new Date().toDateString(),
+        }),
+      });
+
+      if (response.status === 200) {
+        dispatch({ type: "DROP" });
+        toast.success(" Wohoo !! Your Order has been accepted");
+      } else {
+        toast.error(" ohh !! Your Order has not been accepted");
+        console.error("Failed to place the order:", response.statusText);
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   const getTotalPrice = () => {
@@ -100,13 +130,18 @@ const Cart = () => {
             <h2 className="text-xl font-bold">
               Total Price: ₹{getTotalPrice()} /-
             </h2>
-            <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            <button
+              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              onClick={() => {
+                handleCheckOut();
+              }}
+            >
               Proceed to Checkout
             </button>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[70vh] text-center bg-gray-100 p-6">
+        <div className="flex flex-col items-center justify-center h-[70vh] text-center bg-black p-6">
           <Image
             src="https://i.pinimg.com/736x/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.jpg"
             alt="Empty Cart"
