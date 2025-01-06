@@ -42,11 +42,38 @@ import bcrypt from "bcryptjs";
 import db from "../../components/utils/db";
 import Users from "../../models/Users";
 import jwt from "jsonwebtoken";
-
+import Cors from "cors";
 const jwtsecure = process.env.JWT_SECRET; // Secure JWT secret (make sure this is not exposed in production)
+const cors = Cors({
+  methods: ["GET", "POST", "OPTIONS"],
+  origin:
+    "https://pizzapoints-ar35fkz81-harshanks-projects-1b7c664f.vercel.app", // replace with your front-end URL
+});
 
+// Helper function to run middleware
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
 export default async function handler(req, res) {
   // Ensure the request method is POST
+  // Set CORS headers to allow all origins
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    // Handle preflight request
+    res.status(200).end();
+    return;
+  }
+  // await runMiddleware(req, res, cors);
   if (req.method === "POST") {
     const { name, email, password } = req.body;
 
