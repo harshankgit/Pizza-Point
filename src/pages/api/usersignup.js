@@ -118,13 +118,12 @@
 //   // If the method is not POST, return 405 Method Not Allowed
 //   return res.status(405).json({ error: "Method Not Allowed" });
 // }
-
 import bcrypt from "bcryptjs";
 import db from "../../components/utils/db";
 import Users from "../../models/Users";
 import jwt from "jsonwebtoken";
 
-const jwtsecure = process.env.JWT_SECRET || "default_jwt_secret"; // Ensure to use a secure secret in production
+const jwtsecure = process.env.JWT_SECRET; // Ensure to use a secure secret in production
 
 export default async function handler(req, res) {
   // Set CORS headers
@@ -152,12 +151,16 @@ export default async function handler(req, res) {
       // Connect to the database
       await db.connect();
 
-      // Check if the user already exists
-      const existingUser = await Users.findOne({ email });
+      // Check if the user already exists based on email or name
+      const existingUser = await Users.findOne({
+        $or: [{ email }, { name }],
+      });
+
       if (existingUser) {
-        return res
-          .status(400)
-          .json({ success: false, error: "User already exists" });
+        return res.status(400).json({
+          success: false,
+          error: "User with this email or name already exists",
+        });
       }
 
       // Encrypt password
