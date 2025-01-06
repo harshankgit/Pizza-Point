@@ -293,6 +293,8 @@ const MyOrder = () => {
                         src={item.img}
                         alt={item.title}
                         className="w-16 h-16 object-cover rounded-md"
+                        width={500}
+                        height={300}
                       />
                       <div>
                         <p className="text-blue-500 font-semibold">
