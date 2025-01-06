@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-const { username, password } = process.env;
-const connectionMongoose = `mongodb+srv://${username}:${password}@cluster0.ijbuj.mongodb.net/pizza?retryWrites=true&w=majority&appName=Cluster0`;
+// const { username, password } = process.env;
+// const connectionMongoose = `mongodb+srv://${username}:${password}@cluster0.ijbuj.mongodb.net/pizza?retryWrites=true&w=majority&appName=Cluster0`;
+const connectionMongoose = process.env.DB_URL;
 const connection = {};
 
 async function connect() {
