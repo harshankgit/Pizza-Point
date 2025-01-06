@@ -25,6 +25,14 @@ import Head from "next/head";
 //     },
 //   };
 // }
+export const config = {
+  api: {
+    bodyParser: true,
+    responseLimit: "4mb",
+    timeout: 60 * 1000,
+  },
+};
+
 export async function getStaticProps() {
   let response = null;
 
