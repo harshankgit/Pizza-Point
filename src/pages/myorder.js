@@ -225,6 +225,7 @@
 
 import React, { useState, useEffect } from "react";
 import { baseUrl } from "../components/utils/baseUrl";
+import Image from "next/image";
 
 const MyOrder = () => {
   const [orderData, setOrderData] = useState([]);
@@ -288,7 +289,7 @@ const MyOrder = () => {
                       className="flex items-center space-x-4 border-b pb-2"
                     >
                       {/* Item Image */}
-                      <img
+                      <Image
                         src={item.img}
                         alt={item.title}
                         className="w-16 h-16 object-cover rounded-md"

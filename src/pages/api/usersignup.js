@@ -79,9 +79,9 @@ export default async function handler(req, res) {
         },
       };
       const authToken = jwt.sign(data, jwtsecure, { expiresIn: "1h" });
-
+      const isAdmin = await user.isAdmin;
       // Send success response with the auth token
-      return res.status(200).json({ success: true, authToken });
+      return res.status(200).json({ success: true, authToken, isAdmin });
     } catch (error) {
       console.log("Error:", error);
       return res.status(500).json({ error: "Internal Server Error" });

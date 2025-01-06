@@ -5,17 +5,26 @@ import {
   FaSignInAlt,
   FaClipboardList,
   FaSignOutAlt,
+  FaUserShield,
 } from "react-icons/fa";
 import Link from "next/link";
 import { CartContext } from "../utils/ContextReducer";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state } = useContext(CartContext);
   const [mounted, setMounted] = useState(false);
+  let router = useRouter();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    if (!isAdmin) {
+      router.push("/");
+    }
+  }, [router]);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -51,6 +60,16 @@ const Navbar = () => {
           </Link>
           {localStorage.getItem("token") ? (
             <>
+              {localStorage.getItem("isAdmin") === "true" ? (
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+                >
+                  <FaClipboardList />
+                  Admin
+                  <FaUserShield />
+                </Link>
+              ) : null}
               <Link
                 href="/myorder"
                 className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
@@ -120,29 +139,57 @@ const Navbar = () => {
             className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
           >
             <FaShoppingCart />
-            Cart {state.length}
+            Cart {state.length || 0}
           </Link>
-          <Link
-            href="/myorder"
-            className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
-          >
-            <FaClipboardList />
-            My Order
-          </Link>
-          <Link
-            href="/login"
-            className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
-          >
-            <FaUserAlt />
-            Login
-          </Link>
-          <Link
-            href="/signin"
-            className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
-          >
-            <FaSignInAlt />
-            Sign In
-          </Link>
+          {localStorage.getItem("token") ? (
+            <>
+              {localStorage.getItem("isAdmin") === "true" ? (
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+                >
+                  <FaClipboardList />
+                  Admin
+                  <FaUserShield />
+                </Link>
+              ) : null}
+              <Link
+                href="/myorder"
+                className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
+              >
+                <FaClipboardList />
+                My Order
+              </Link>
+              <Link
+                href="/login"
+                className="flex items-center gap-1 hover:text-blue-400 transition-all duration-300"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("useremail");
+                }}
+              >
+                <FaSignOutAlt />
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
+              >
+                <FaUserAlt />
+                Login
+              </Link>
+              <Link
+                href="/signin"
+                className="flex items-center gap-1 py-2 text-white hover:text-yellow-400 transition-all duration-300"
+              >
+                <FaSignInAlt />
+                Sign In
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>

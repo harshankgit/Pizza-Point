@@ -37,6 +37,7 @@ const SignIn = () => {
     if (json.success) {
       localStorage.setItem("token", json.authToken);
       localStorage.setItem("useremail", email);
+      localStorage.setItem("isAdmin", false);
       router.push("/");
       toast.success("Sign In successfully");
     } else if (json.error) {
