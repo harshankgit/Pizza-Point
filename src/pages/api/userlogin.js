@@ -40,7 +40,6 @@
 //   res.status(200).json({ name: "done" });
 // }
 
-import Cors from "cors";
 import db from "../../components/utils/db";
 import Users from "../../models/Users";
 import bcrypt from "bcryptjs";
@@ -48,26 +47,7 @@ import jwt from "jsonwebtoken";
 
 const jwtsecure = process.env.JWT_SECRET;
 
-// Initialize CORS middleware
-const cors = Cors({
-  methods: ["GET", "POST", "OPTIONS"],
-});
-
-// Function to run the CORS middleware
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
-
 export default async function handler(req, res) {
-  await runMiddleware(req, res, cors); // Run the middleware
-
   let success = false;
 
   if (req.method === "POST") {
