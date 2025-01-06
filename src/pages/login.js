@@ -21,12 +21,14 @@ const Login = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
       body: JSON.stringify({
         email: email,
         password: password,
       }),
     });
+
     const json = await response.json();
     console.log("json", json);
     if (json.success) {
