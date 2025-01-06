@@ -40,6 +40,7 @@ export async function getStaticProps() {
     props: {
       data: response?.data || null,
     },
+    revalidate: 2,
   };
 }
 

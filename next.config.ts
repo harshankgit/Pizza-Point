@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
       "encrypted-tbn0.gstatic.com",
       "www.foodandwine.com",
       "static.toiimg.com",
+      "t3.ftcdn.net",
     ],
   },
 };

@@ -5,9 +5,11 @@ import Image from "next/image";
 import { baseUrl } from "../components/utils/baseUrl";
 import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
   console.log("statestate", state);
+  let router = useRouter();
   const handleQuantityChange = (tempId, delta) => {
     dispatch({
       type: "UPDATE_QUANTITY",
@@ -18,28 +20,32 @@ const Cart = () => {
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("useremail");
 
-    try {
-      const response = await fetch(baseUrl + "api/orderdetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          order_data: state,
-          email: userEmail,
-          order_date: new Date().toDateString(),
-        }),
-      });
+    if (userEmail === null || userEmail === undefined) {
+      router.push("/login");
+    } else {
+      try {
+        const response = await fetch(baseUrl + "api/orderdetails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order_data: state,
+            email: userEmail,
+            order_date: new Date().toDateString(),
+          }),
+        });
 
-      if (response.status === 200) {
-        dispatch({ type: "DROP" });
-        toast.success(" Wohoo !! Your Order has been accepted");
-      } else {
-        toast.error(" ohh !! Your Order has not been accepted");
-        console.error("Failed to place the order:", response.statusText);
+        if (response.status === 200) {
+          dispatch({ type: "DROP" });
+          toast.success(" Wohoo !! Your Order has been accepted");
+        } else {
+          toast.error(" ohh !! Your Order has not been accepted");
+          console.error("Failed to place the order:", response.statusText);
+        }
+      } catch (err) {
+        console.error("Error:", err);
       }
-    } catch (err) {
-      console.error("Error:", err);
     }
   };
 
