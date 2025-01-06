@@ -3,7 +3,7 @@ import Users from "../../models/Users";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const jwtsecure = "arfcvom@#rfc";
+const jwtsecure = process.env.JWT_SECRET;
 export default async function handler(req, res) {
   let success = false;
   if (req.method === "POST") {

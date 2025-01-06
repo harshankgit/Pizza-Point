@@ -43,7 +43,7 @@ import db from "../../components/utils/db";
 import Users from "../../models/Users";
 import jwt from "jsonwebtoken";
 
-const jwtsecure = "arfcvom@#rfc"; // Secure JWT secret (make sure this is not exposed in production)
+const jwtsecure = process.env.JWT_SECRET; // Secure JWT secret (make sure this is not exposed in production)
 
 export default async function handler(req, res) {
   // Ensure the request method is POST
