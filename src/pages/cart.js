@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "@/components/utils/ContextReducer";
 import { FaTrashAlt } from "react-icons/fa";
 import Image from "next/image";

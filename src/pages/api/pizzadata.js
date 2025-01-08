@@ -65,7 +65,51 @@ export default async function handler(req, res) {
       console.timeEnd("GET Request Time");
       return res.status(200).json({ data });
     }
-
+    if (req.method === "PUT") {
+      const { id, title, category, foodType, price, description, img, options } = req.body;
+    
+      if (!id) {
+        return res.status(400).json({ message: "ID is required to update the record" });
+      }
+    
+      try {
+        const updatedItem = await PizzaData.findByIdAndUpdate(
+          id,
+          { title, category, foodType, price, description, img, options },
+          { new: true } // Return the updated document
+        );
+    
+        if (!updatedItem) {
+          return res.status(404).json({ message: "Item not found" });
+        }
+    
+        return res.status(200).json({ success: true, data: updatedItem });
+      } catch (error) {
+        console.error("Error updating record:", error);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+    }if (req.method === "DELETE") {
+      const { id } = req.body;
+    
+      if (!id) {
+        return res.status(400).json({ message: "ID is required to delete the record" });
+      }
+    
+      try {
+        const deletedItem = await PizzaData.findByIdAndDelete(id);
+    
+        if (!deletedItem) {
+          return res.status(404).json({ message: "Item not found" });
+        }
+    
+        return res.status(200).json({ success: true, message: "Item deleted successfully" });
+      } catch (error) {
+        console.error("Error deleting record:", error);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+    }
+    
+    
     res.setHeader("Allow", ["POST", "GET"]);
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   } catch (error) {

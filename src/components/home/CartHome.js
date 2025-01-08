@@ -174,7 +174,10 @@ const CartHome = ({ products, SelectOption }) => {
                   Price: ₹{getPrice(product)} /-
                 </p>
                 <button
-                  onClick={() => handleAddToCart(product)}
+                  onClick={() => {
+                    handleAddToCart(product);
+             
+                  }}
                   className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 mt-4 transition-colors duration-300"
                 >
                   Add to Cart
