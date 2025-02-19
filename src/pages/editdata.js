@@ -32,22 +32,12 @@ const EditData = () => {
   // Fetch data on component mount
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
-  // Filter data whenever the ID or dataArray changes
+  // Filter data whenever ID or dataArray changes
   useEffect(() => {
     filterData();
-  }, [id, dataArray]);
-
-  console.log(
-    "Found item:",
-    foundItem,
-    "Title:",
-    foundItem?.title,
-    "Options:",
-    foundItem?.options
-  );
-
+  }, [filterData]);
   // Handle changes to input fields and update state
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
       "www.foodandwine.com",
       "static.toiimg.com",
       "t3.ftcdn.net",
+     " cdn-icons-png.flaticon.com",
+     "e7.pngegg.com",
     ],
   },
   async headers() {
