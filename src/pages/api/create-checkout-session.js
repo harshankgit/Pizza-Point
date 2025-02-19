@@ -14,7 +14,7 @@ export default async function handler(req, res) {
             name: item.title,
             images: [item.img],
           },
-          unit_amount: Math.round(item.price * 100), // Amount in paise
+          unit_amount: Math.round(item.price * 100), 
         },
         quantity: item.quantity,
       }));
